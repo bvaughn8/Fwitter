@@ -5,6 +5,10 @@ $colourRtn: #9b59b6;
 $black: #000;
 $white: #fff;
 
+head {
+  background-color: #6396bc;
+}
+
 body {
   background-color: #6396bc;
 }
@@ -33,10 +37,12 @@ body {
 }
 
 .select__list {
+  list-style: none;
+  text-align: center;
+  padding-right: 37px;
   display: inline-flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  position: absolute;
   top: 10px;
 }
 
