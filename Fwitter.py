@@ -9,6 +9,8 @@ class Post:
     def __init__(self, username, content):
         self.username = username
         self.content = content
+    def __str__(self):
+        return self.username, self.content
 postList = []
 user_dataBase = {"txtxxu":"tiffanyxu816","bvaughn":"123","adam":"234","chris":"234"}
 
@@ -52,6 +54,8 @@ def user(username):
     for each in postList:
         if each.username == username:
             userPosts.append(each)
+    for each in userPosts:
+        print(each)
     return "My name is {}".format(username)
 
 @app.route('/logout')
