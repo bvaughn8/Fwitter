@@ -19,7 +19,7 @@ class User(UserMixin):
 
 @app.route('/login', methods=['GET', 'POST']) #log-in page
 def login():
-    return "login screen"
+    return render_template('loginScript2.html')
 
 
 @app.route('/feed', methods=["POST"])  #feedpage after login
