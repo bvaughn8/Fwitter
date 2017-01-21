@@ -1,9 +1,9 @@
 from flask import Flask
 app = Flask(__name__)
 
-@app.route('/login', methods=['GET', 'POST']) #log-in page 
+@app.route('/login', methods=['GET', 'POST']) #log-in page
 def login():
-    return 
+    return render_template('login.html')
 
 
 @app.route('/')  #feedpage after login
@@ -11,7 +11,7 @@ def index():
     return "FWITTER"
 
 
-@app.route('/user/<username>') #user page 
+@app.route('/user/<username>') #user page
 def user(username):
     return "My name is {}".format(username)
 
