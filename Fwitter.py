@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, url_for
+from flask import Flask, render_template, url_for, request, redirect, url_for, session
 from flask_login import LoginManager, UserMixin, login_required, current_user, login_user
 app = Flask(__name__)
 
@@ -22,13 +22,16 @@ class User(UserMixin):
 @app.route('/feed', methods=["GET", "POST"])  #feedpage after login
 #@login_required
 def index():
-    if request.method == "POST":
-        content = request.form["tweet"] #request.form is a dictionary
-        username = current_user.username
-        post = Post(username, content)
-        postList.append(post)
-    #return render_template() #enter html
-    return postList
+    if(session['logged_in'] == False):
+        return login()
+    else:
+        if request.method == "POST":
+            content = request.form["tweet"] #request.form is a dictionary
+            username = current_user.username
+            post = Post(username, content)
+            postList.append(post)
+            #return render_template() #enter html
+            return postList
 
 @app.route('/login', methods=['GET', 'POST']) #log-in page
 def login():
@@ -36,15 +39,15 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         login_action(username, password)
-        redirect(url_for('/feed'))
+        redirect(url_for('index'))
     return render_template('loginScript2.html')
 
 @login_manager.user_loader
 def login_action(username, password):
     if(username in user_dataBase and user_dataBase[username] == password):
-        return User(username, password)
+        session['logged_in'] = True
+        return #User(username, password)
     return None
-
 
 
 @app.route('/user/<username>') #user page
@@ -60,7 +63,8 @@ def user(username):
 
 @app.route('/logout')
 def logout():
-    return redirect(url_for('/login'))
+    session['logged_in'] = False;
+    return #redirect(url_for('/login'))
 
 if __name__ == "__main__":
     app.run()
