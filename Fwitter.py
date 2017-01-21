@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, url_for, request
 from flask_login import LoginManager, UserMixin, login_required, current_user
 app = Flask(__name__)
