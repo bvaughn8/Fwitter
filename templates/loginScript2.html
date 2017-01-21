@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="da" lang="en">
 <head>
-<link rel="StyleSheet" href="style.css" type="text/css">
+<link rel="StyleSheet" href=" {{ url_for('static', filename='style.css') }}" type="text/css">
 <title>Login</title>
 </head>
 <body>
@@ -17,14 +17,13 @@ function CheckPassword() {
 <img src="https://raw.githubusercontent.com/bvaughn8/Fwitter/HTML/fwitterlogo.png" width="120" height="90" alt="Logo">
 </h1>
 <h2>
-<form method="post" action="ingen_javascript.htm"
-  onsubmit="CheckPassword();return false;" name="login">
+<form method="post" action="/login"
+   name="login">
 <pre>
 Username: <input type="text" name="username">
 Password: <input type="password" name="password">
 </pre>
-<input type="submit" value="login"
-  onclick="CheckPassword();return false;">
+<input type="submit" value="login">
 </form>
 </h2>
 
