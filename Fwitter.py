@@ -51,11 +51,12 @@ def login_action(username, password):
 
 @app.route('/user/<username>') #user page
 #@login_required
-if(session['logged_in'] == False):
-    return login()
-else:
-    def user(username):
-        return "My name is {}".format(username)
+def user(username):
+    userPosts = []
+    for each in postList:
+        if each.username == username:
+            userPosts.append(each)
+    return "My name is {}".format(username)
 
 @app.route('/logout')
 def logout():
