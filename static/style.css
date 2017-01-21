@@ -1,0 +1,70 @@
+body {
+    font-family: Georgia;
+    font-size: 14px;
+    color: white;
+    background-color: white;
+    margin: 20px;
+    padding: 0;
+}
+
+p {
+    line-height: 21px;
+    text-align: left;
+}
+a {
+  color: blue;
+}
+
+h1 {
+    color: blue;
+    background-color: white;
+    font-size: 2em;
+    margin: 0;
+    margin-bottom: 7px;
+    padding: 4px;
+    font-style: normal;
+    text-align: center;
+    letter-spacing: 0.5em;
+}
+
+h2 {
+    color: blue;
+    background-color: white;
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+h3 {
+    color: red;
+    background-color: white;
+    font-size: 1.25em;
+    text-align: center;
+    text-decoration: underline;
+}
+
+img {
+    border-width: 2px;
+    border-color: #ccc;
+    margin: auto;
+}
+
+a {
+    text-decoration: underline;;
+}
+
+strong {
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+li {
+    color: #900;
+    font-style: italic;
+}
+
+table {
+    background-color: #ccc;
+    margin: auto;
+
+}
