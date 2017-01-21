@@ -34,7 +34,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         login_action(username, password)
-        redirect(url_for('index'))
+        redirect(url_for('/feed'))
     return render_template('loginScript2.html')
 
 @login_manager.user_loader
