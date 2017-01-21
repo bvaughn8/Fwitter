@@ -34,6 +34,10 @@ def index():
     
 @app.route('/user/<username>') #user page 
 def user(username):
+    userPosts = []
+    for each in postList:
+        if each.username == username:
+            userPosts.append(each)
     return "My name is {}".format(username)
 
 @app.route('/logout')
