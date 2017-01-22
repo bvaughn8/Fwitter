@@ -16,7 +16,7 @@ def feed():
      print("indx")
      if(session['logged_in'] == False):
          app.logger.info("I reached here")
-         redirect(url_for("login"))
+         return redirect(url_for("login"))
      else:
          if request.method == "POST":
              content = request.form["tweet"] #request.form is a dictionary
@@ -24,31 +24,31 @@ def feed():
              post = Post(username, content)
              postList.append(post)
              #return render_template() #enter html
-         return postList
+         return render_template('NewsFeed.html')
 
 
 @app.route('/login', methods=['GET', 'POST']) #log-in page
 def login():
     if(session['logged_in'] == True):
         app.logger.info("trying to redirect")
-        redirect(url_for("feed"))
+        return redirect((url_for("feed")))
     app.logger.info("heyo")
 
+    app.logger.info(request.method)
     if request.method == 'POST':
-         username = request.form["username"]
-         password = request.form["password"]
-         app.logger.info("before" + str(session['logged_in']))
-         login_action(username, password)
-         app.logger.info("logged_in" + str(session['logged_in']))
-         redirect(url_for("feed"))
+        username = request.form["username"]
+        password = request.form["password"]
+        app.logger.info("before" + str(session['logged_in']))
+        login_action(username, password)
+        app.logger.info("logged_in" + str(session['logged_in']))
+        return redirect(url_for("feed"))
 
-    return render_template('loginScript2.html')
-    return "mfw"
+    return render_template('prettyLogin.html')
 
 def login_action(username, password):
-     print("loginac")
+     app.logger.info("loginac")
      if(username in user_dataBase and user_dataBase[username] == password):
-        print("yay")
+        app.logger.info("yay")
         session['logged_in'] = True
         session["username"] = username
 
@@ -67,7 +67,7 @@ def user(username):
 def logout():
     session['logged_in'] = False
     session['username'] = None
-    return #redirect(url_for('/login'))
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.config["SECRET_KEY"] = "ITSASECRET"
