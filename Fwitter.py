@@ -1,9 +1,6 @@
+import sys
 from flask import Flask, render_template, url_for, request, redirect, url_for, session
-from flask_login import LoginManager, UserMixin, login_required, current_user, login_user
 app = Flask(__name__)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 class Post:
     def __init__(self, username, content):
@@ -12,56 +9,61 @@ class Post:
 postList = []
 user_dataBase = {"txtxxu":"tiffanyxu816","bvaughn":"123","adam":"234","chris":"234"}
 
-class User(UserMixin):
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
 @app.route('/feed', methods=["GET", "POST"])  #feedpage after login
-#@login_required
-def index():
-    if(session['logged_in'] == False):
-        return login()
-    else:
-        if request.method == "POST":
-            content = request.form["tweet"] #request.form is a dictionary
-            username = current_user.username
-            post = Post(username, content)
-            postList.append(post)
-            #return render_template() #enter html
-            return postList
+def feed():
+     print("indx")
+     if(session['logged_in'] == False):
+         app.logger.info("I reached here")
+         redirect(url_for("login"))
+     else:
+         if request.method == "POST":
+             content = request.form["tweet"] #request.form is a dictionary
+             username = session['username']
+             post = Post(username, content)
+             postList.append(post)
+             #return render_template() #enter html
+         return postList
+
 
 @app.route('/login', methods=['GET', 'POST']) #log-in page
 def login():
-    if request.method == 'POST':
-        username = request.form["username"]
-        password = request.form["password"]
-        login_action(username, password)
-        return index()
-        redirect(url_for('index'))
-    return render_template('loginScript2.html')
+    if(session['logged_in'] == True):
+        app.logger.info("trying to redirect")
+        redirect(url_for("feed"))
+    app.logger.info("heyo")
 
-@login_manager.user_loader
+    if request.method == 'POST':
+         username = request.form["username"]
+         password = request.form["password"]
+         app.logger.info("before" + str(session['logged_in']))
+         login_action(username, password)
+         app.logger.info("logged_in" + str(session['logged_in']))
+         redirect(url_for("feed"))
+    return render_template('loginScript2.html')
+    return "mfw"
+
 def login_action(username, password):
-    if(username in user_dataBase and user_dataBase[username] == password):
+     print("loginac")
+     if(username in user_dataBase and user_dataBase[username] == password):
+        print("yay")
         session['logged_in'] = True
-        return #User(username, password)
-    return None
+        session["username"] = username
 
 
 @app.route('/user/<username>') #user page
-#@login_required
 def user(username):
-    userPosts = []
-    for each in postList:
-        if each.username == username:
-            userPosts.append(each)
-    return "My name is {}".format(username)
+     userPosts = []
+     for each in postList:
+         if each.username == username:
+             userPosts.append(each)
+     return "My name is {}".format(username)
 
 @app.route('/logout')
 def logout():
-    session['logged_in'] = False;
+    session['logged_in'] = False
+    session['username'] = None
     return #redirect(url_for('/login'))
 
 if __name__ == "__main__":
-    app.run()
+    app.config["SECRET_KEY"] = "ITSASECRET"
+    app.run(debug=True, use_reloader=False)
