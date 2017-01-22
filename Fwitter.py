@@ -6,6 +6,8 @@ class Post:
     def __init__(self, username, content):
         self.username = username
         self.content = content
+    def __str__(self):
+        return self.username, self.content
 postList = []
 user_dataBase = {"txtxxu":"tiffanyxu816","bvaughn":"123","adam":"234","chris":"234"}
 
@@ -39,6 +41,7 @@ def login():
          login_action(username, password)
          app.logger.info("logged_in" + str(session['logged_in']))
          redirect(url_for("feed"))
+
     return render_template('loginScript2.html')
     return "mfw"
 
@@ -52,11 +55,13 @@ def login_action(username, password):
 
 @app.route('/user/<username>') #user page
 def user(username):
-     userPosts = []
-     for each in postList:
-         if each.username == username:
-             userPosts.append(each)
-     return "My name is {}".format(username)
+    userPosts = []
+    for each in postList:
+        if each.username == username:
+            userPosts.append(each)
+    for each in userPosts:
+        print(each)
+    return "My name is {}".format(username)
 
 @app.route('/logout')
 def logout():
